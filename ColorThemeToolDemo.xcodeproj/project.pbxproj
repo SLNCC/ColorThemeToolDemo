@@ -19,6 +19,7 @@
 		00414C75261EED6100B10CE3 /* ColorThief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00414C73261EED6100B10CE3 /* ColorThief.swift */; };
 		00414C76261EED6100B10CE3 /* MMCQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00414C74261EED6100B10CE3 /* MMCQ.swift */; };
 		00414C83261EFC3500B10CE3 /* SMColorThemeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 00414C82261EFC3500B10CE3 /* SMColorThemeTool.m */; };
+		00C683F6261F077400481CE6 /* SMImageTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C683F5261F077400481CE6 /* SMImageTool.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		00414C80261EFC3500B10CE3 /* ColorThemeToolDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ColorThemeToolDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		00414C81261EFC3500B10CE3 /* SMColorThemeTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMColorThemeTool.h; sourceTree = "<group>"; };
 		00414C82261EFC3500B10CE3 /* SMColorThemeTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMColorThemeTool.m; sourceTree = "<group>"; };
+		00C683F5261F077400481CE6 /* SMImageTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMImageTool.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				00414C29261EE3CF00B10CE3 /* AppDelegate.swift */,
 				00414C2D261EE3CF00B10CE3 /* ViewController.swift */,
 				00414C5C261EE3DF00B10CE3 /* SMColorThemeTool.swift */,
+				00C683F5261F077400481CE6 /* SMImageTool.swift */,
 				00414C2F261EE3CF00B10CE3 /* Main.storyboard */,
 				00414C32261EE3D100B10CE3 /* Assets.xcassets */,
 				00414C34261EE3D100B10CE3 /* LaunchScreen.storyboard */,
@@ -289,6 +292,7 @@
 				00414C75261EED6100B10CE3 /* ColorThief.swift in Sources */,
 				00414C2A261EE3CF00B10CE3 /* AppDelegate.swift in Sources */,
 				00414C76261EED6100B10CE3 /* MMCQ.swift in Sources */,
+				00C683F6261F077400481CE6 /* SMImageTool.swift in Sources */,
 				00414C83261EFC3500B10CE3 /* SMColorThemeTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
