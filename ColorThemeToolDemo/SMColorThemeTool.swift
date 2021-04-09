@@ -15,6 +15,8 @@
  //  https://github.com/SvenWoltmann/color-thief-java
  // Kazuki Ohara  --- for the fast Swift Implementation
  // https://github.com/yamoridon/ColorThiefSwift
+ // AIHGF ---  for the fast Python Implementation
+ // https://www.aiuai.cn/aifarm1158.html
  */
 import UIKit
 
