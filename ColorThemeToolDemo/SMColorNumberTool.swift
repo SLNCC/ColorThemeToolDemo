@@ -9,6 +9,37 @@ import UIKit
 
 class SMColorNumberTool {
     
+    
+    /// UIColor 转化成Hex
+    /// - Parameter color: UIColor
+    /// - Returns: AHEX
+    static func getAHexColorWithColor(color: UIColor) -> String? {
+       
+        guard let components = color.cgColor.components else {
+            return nil
+        }
+        let r = components[0]
+        let g = components[1]
+        let b = components[2]
+        let a = components[3]
+
+        let red = String(UInt32(r * 255),radix: 16)
+        let green = String(UInt32(g * 255),radix: 16)
+        let blue = String(UInt32(b * 255),radix: 16)
+        let alpa = String(UInt32(a * 255),radix: 16)
+        return alpa + red + green + blue
+    }
+    
+    /// UIColor 转化成UInt32
+    /// - Parameter color: color
+    /// - Returns: UInt32
+    static func getColorUInt32WithColor(color: UIColor) -> UInt32 {
+        guard let hex = getAHexColorWithColor(color: color) else {
+            return 0
+        }
+        return getColorUInt32WithHex(hex)
+    }
+    
     /// 16进制颜色转为 UInt32
     /// - Parameters:
     ///   - hex: 16进制  HEX：6    AHEX： 8

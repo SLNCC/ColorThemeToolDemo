@@ -125,6 +125,12 @@ UINavigationControllerDelegate {
         print("6位16进制转化成ColorUInt32：\(hexColor)")
         let color = SMColorNumberTool.getColorWithUInt32(hexColor)
         print("UInt32转成Color：\(color)")
+        
+        let hex = SMColorNumberTool.getAHexColorWithColor(color: color)
+        print("hex===\(String(describing: hex))")
+        
+        let colorUInt32 = SMColorNumberTool.getColorUInt32WithColor(color: color)
+        print("hex===\(String(describing: colorUInt32))")
     }
 
 }
