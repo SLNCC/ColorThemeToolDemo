@@ -6,6 +6,16 @@
 //  Copyright © 2021 Joedd. All rights reserved.
 //
 
+/**
+ //  Thanks  🙏🙏🙏🙏
+ //  ------
+ //  Lokesh Dhakar - for the original Color Thief JavaScript version
+ //  http://lokeshdhakar.com/projects/color-thief/
+ //  Sven Woltmann - for the fast Java Implementation
+ //  https://github.com/SvenWoltmann/color-thief-java
+ // Kazuki Ohara  --- for the fast Swift Implementation
+ // https://github.com/yamoridon/ColorThiefSwift
+ */
 import UIKit
 
 class SMColorThemeTool {
