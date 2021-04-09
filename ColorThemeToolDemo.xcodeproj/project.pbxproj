@@ -220,8 +220,10 @@
 		00414C1E261EE3CF00B10CE3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = JD;
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
+				ORGANIZATIONNAME = joedd;
 				TargetAttributes = {
 					00414C25261EE3CF00B10CE3 = {
 						CreatedOnToolsVersion = 12.4;
