@@ -21,13 +21,11 @@ class SMColorNumberTool {
         let r = components[0]
         let g = components[1]
         let b = components[2]
-        let a = components[3]
-
-        let red = String(UInt32(r * 255),radix: 16)
-        let green = String(UInt32(g * 255),radix: 16)
-        let blue = String(UInt32(b * 255),radix: 16)
-        let alpa = String(UInt32(a * 255),radix: 16)
-        return alpa + red + green + blue
+        var a: CGFloat = 1.0
+        if components.count >= 3 {
+            a = components[3]
+        }
+        return String(format: "%02X%02X%02X%02X",UInt32(a * 255), UInt32(r * 255),UInt32(g * 255),UInt32(b * 255))
     }
     
     /// UIColor 转化成UInt32
@@ -47,13 +45,34 @@ class SMColorNumberTool {
     /// - Returns: UInt32
     static func getColorUInt32WithSixHex(_ hex: String, alpha: CGFloat? =  nil) -> UInt32 {
         var result = hex
+        if (result.hasPrefix("##") || result.hasPrefix("0x")) {
+            result =  String(result.suffix(from: result.index(result.startIndex, offsetBy: 2)))
+        }
+        if (result.hasPrefix("#")) {
+            result = String(result.suffix(from: result.index(result.startIndex, offsetBy: 1)))
+        }
+        if result.count > 8 {
+            result = String(result.prefix(8))
+        }
+        if result.count < 6 {//补全6位
+            let count = 6 - result.count
+            let arr = Array(0..<count).map { (_) -> Character in
+                return "0"
+            }
+            let index = result.index(result.startIndex, offsetBy: 0)
+            result.insert(contentsOf: arr, at: index)
+        }
         if let alpa = alpha, alpa >= 0 && alpa <= 1 {
-            let alpaHex = String(UInt32(alpa * 255),radix: 16)
-            if result.hasPrefix("#") {
-                let index = result.index(result.startIndex, offsetBy: 1)
-                result.insert(contentsOf: alpaHex, at: index)
-            }else {
-                result = alpaHex + result
+            let alpaHex = String(format: "%02X",UInt32(alpa * 255))
+            if result.count == 6 {
+                if result.hasPrefix("#") {
+                    let index = result.index(result.startIndex, offsetBy: 1)
+                    result.insert(contentsOf: alpaHex, at: index)
+                }else {
+                    result = alpaHex + result
+                }
+            }else if result.count == 8 {
+                result = pregReplace(content: result, pattern: String(result.prefix(2)), replaceString: alpaHex)
             }
             result = result.uppercased()
         }
