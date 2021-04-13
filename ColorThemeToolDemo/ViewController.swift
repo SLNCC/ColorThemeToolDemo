@@ -121,15 +121,15 @@ UINavigationControllerDelegate {
     }
     
     func test2() {
-        let hexColor = SMColorNumberTool.getColorUInt32WithSixHex("#FFFFFF",alpha: 0.7)
+        let hexColor = SMColorNumberTool.getColorUInt32ByHex("#FFFFFF",alpha: 0.7)
         print("6位16进制转化成ColorUInt32：\(hexColor)")
-        let color = SMColorNumberTool.getColorWithUInt32(hexColor)
+        let color = SMColorNumberTool.getColorUInt32(hexColor)
         print("UInt32转成Color：\(color)")
         
-        let hex = SMColorNumberTool.getAHexColorWithColor(color: color)
+        let hex = SMColorNumberTool.getAHexColor(color: color)
         print("hex===\(String(describing: hex))")
         
-        let colorUInt32 = SMColorNumberTool.getColorUInt32WithColor(color: color)
+        let colorUInt32 = SMColorNumberTool.getColorUInt32ByColor(color: color)
         print("hex===\(String(describing: colorUInt32))")
     }
 

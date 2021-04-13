@@ -13,7 +13,7 @@ class SMColorNumberTool {
     /// UIColor 转化成Hex
     /// - Parameter color: UIColor
     /// - Returns: AHEX
-    static func getAHexColorWithColor(color: UIColor) -> String? {
+    static func getAHexColor(color: UIColor) -> String? {
        
         guard let components = color.cgColor.components else {
             return nil
@@ -31,11 +31,20 @@ class SMColorNumberTool {
     /// UIColor 转化成UInt32
     /// - Parameter color: color
     /// - Returns: UInt32
-    static func getColorUInt32WithColor(color: UIColor) -> UInt32 {
-        guard let hex = getAHexColorWithColor(color: color) else {
+    static func getColorUInt32ByColor(color: UIColor) -> UInt32 {
+        guard let hex = getAHexColor(color: color) else {
             return 0
         }
-        return getColorUInt32WithHex(hex)
+        return getColorUInt32ByHex(hex)
+    }
+    
+    /// 颜色 10进制转化成10进制
+    /// - Parameters:
+    ///   - value: UInt32  HEX: 6
+    ///   - alpha: 设置透明度 范围：0～1
+    /// - Returns: UIColor
+    static func getColorUInt32ByUInt32(_ value: UInt32, alpha: CGFloat? = nil) -> UInt32 {
+        return getColorUInt32ByHex(String(value, radix: 16), alpha: alpha)
     }
     
     /// 16进制颜色转为 UInt32
@@ -43,7 +52,10 @@ class SMColorNumberTool {
     ///   - hex: 16进制  HEX：6    AHEX： 8
     ///   - alpha: alpha 范围  0~1
     /// - Returns: UInt32
-    static func getColorUInt32WithSixHex(_ hex: String, alpha: CGFloat? =  nil) -> UInt32 {
+    static func getColorUInt32ByHex(_ hex: String, alpha: CGFloat? =  nil) -> UInt32 {
+        if alpha == 0 {
+            return 0
+        }
         var result = hex
         if (result.hasPrefix("##") || result.hasPrefix("0x")) {
             result =  String(result.suffix(from: result.index(result.startIndex, offsetBy: 2)))
@@ -62,9 +74,9 @@ class SMColorNumberTool {
             let index = result.index(result.startIndex, offsetBy: 0)
             result.insert(contentsOf: arr, at: index)
         }
-        if let alpa = alpha, alpa >= 0 && alpa <= 1 {
-            let alpaHex = String(format: "%02X",UInt32(alpa * 255))
+        if let alpa = alpha, alpa > 0 && alpa <= 1 {
             if result.count == 6 {
+                let alpaHex = String(format: "%02X",UInt32(alpa * 255))
                 if result.hasPrefix("#") {
                     let index = result.index(result.startIndex, offsetBy: 1)
                     result.insert(contentsOf: alpaHex, at: index)
@@ -72,17 +84,23 @@ class SMColorNumberTool {
                     result = alpaHex + result
                 }
             }else if result.count == 8 {
-                result = pregReplace(content: result, pattern: String(result.prefix(2)), replaceString: alpaHex)
+                //透明度计算
+                let preAlpha = String(result.prefix(2))
+                let a = alpa * CGFloat(getColorUInt32ByHex(preAlpha))/CGFloat(255)
+                let hexA = String(format: "%02X",UInt32(a * 255))
+                if let r = result.range(of: preAlpha,options: .regularExpression) {
+                    result.replaceSubrange(r, with: hexA)
+                }
             }
             result = result.uppercased()
         }
-        return getColorUInt32WithHex(result)
+        return getColorUInt32ByHex(result)
     }
     
     /// 16进制颜色转为 UInt32
     /// - Parameter hex: 16进制
     /// - Returns: UInt32
-    static func getColorUInt32WithHex(_ hex: String) -> UInt32 {
+    static func getColorUInt32ByHex(_ hex: String) -> UInt32 {
         let colorHex = pregReplace(content: hex, pattern: "#", replaceString: "0x")
         let scanner = Scanner(string: colorHex)
         var hexNum: UInt32 = 0
@@ -95,15 +113,15 @@ class SMColorNumberTool {
     ///   - value: UInt32  （ AHEX、HEX）
     ///   - alpha: 设置透明度 范围：0～1
     /// - Returns: UIColor
-    static func getColorWithUInt32(_ value: UInt32, alpha: CGFloat? = nil) -> UIColor {
-        return getColorWithHex(String(value, radix: 16),alpha: alpha)
+    static func getColorUInt32(_ value: UInt32, alpha: CGFloat? = nil) -> UIColor {
+        return getColorByHex(String(value, radix: 16),alpha: alpha)
     }
     
     /// 16进制转化成color
     /// - Parameters:
-    ///   - hex: 16进制  6、7位 对应HEX、8位对应AHEX
+    ///   - hex: 16进制  hex 最大8位
     ///   - alpha: 0～1
-    static func getColorWithHex(_ hex: String, alpha: CGFloat? = nil) -> UIColor {
+    static func getColorByHex(_ hex: String, alpha: CGFloat? = nil) -> UIColor {
         var hexString = hex.uppercased()
         if (hexString.hasPrefix("##") || hexString.hasPrefix("0x") || hexString.hasPrefix("0X")) {
             hexString = (hexString as NSString).substring(from: 2)
@@ -112,11 +130,17 @@ class SMColorNumberTool {
             hexString = (hexString as NSString).substring(from: 1)
         }
         
-        guard hexString.count >= 6 else {
-            return UIColor.clear
-        }
         if hexString.count > 8 {
             hexString = String(hexString.prefix(8))
+        }
+        
+        if hexString.count < 6 {//补全6位
+            let count = 6 - hexString.count
+            let arr = Array(0..<count).map { (_) -> Character in
+                return "0"
+            }
+            let index = hexString.index(hexString.startIndex, offsetBy: 0)
+            hexString.insert(contentsOf: arr, at: index)
         }
         var a: UInt32 = 255
         var r: UInt32 = 0
